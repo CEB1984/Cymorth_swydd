@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doc Creator</title>
+  <link rel="stylesheet" href="/css/styles.css">
+</head>
+<body>
+
+  <header class="topbar">
+    <span class="topbar-title">Doc Creator</span>
+    <span class="storage-info" id="storageInfo">Loading...</span>
+  </header>
+
+  <div class="layout">
+
+    <aside class="sidebar" id="sidebar">
+      <div class="sidebar-header">
+        <span>Guides</span>
+        <button class="btn btn-sm" id="btnNewGuide">+ New</button>
+      </div>
+      <ul class="guide-list" id="guideList"></ul>
+    </aside>
+
+    <main class="main-panel" id="mainPanel">
+
+      <div class="empty-state" id="emptyState">
+        <p>Select a guide or create a new one to get started.</p>
+      </div>
+
+      <section class="panel" id="recordPanel" hidden>
+        <div class="panel-header">
+          <h2 id="recordGuideTitle" class="panel-title">—</h2>
+          <div class="record-controls">
+            <button class="btn btn-primary" id="btnRecord">&#9210; Start Recording</button>
+            <button class="btn btn-danger" id="btnStop" disabled>&#9209; Stop</button>
+            <button class="btn btn-capture" id="btnCapture" disabled>&#128247; Capture Step <kbd>Alt+S</kbd></button>
+            <span class="record-status" id="recordStatus"></span>
+          </div>
+        </div>
+        <div class="bookmarklet-hint" id="bookmarkletHint">
+          <strong>Optional — better labels:</strong>
+          drag this to your bookmarks bar, then click it in the tab you are recording:
+          <a class="bookmarklet-link" id="bookmarkletLink" href="#">&#128203; DocCreator Context</a>
+          <button class="btn btn-xs" id="btnDismissHint">Dismiss</button>
+        </div>
+      </section>
+
+      <section class="panel" id="editorPanel" hidden>
+        <div class="panel-header">
+          <input class="title-input" id="guideTitle" type="text" placeholder="Guide title" maxlength="200">
+          <div class="editor-controls">
+            <button class="btn btn-sm" id="btnAddStep">+ Add Step</button>
+            <button class="btn btn-sm" id="btnExportWord">&#8595; Word</button>
+            <button class="btn btn-sm" id="btnExportHtml">&#8595; HTML</button>
+            <button class="btn btn-sm btn-danger" id="btnDeleteGuide">Delete Guide</button>
+          </div>
+        </div>
+        <div class="step-warning" id="stepWarning" hidden>
+          Warning: this guide has more than <span id="maxStepsLabel">100</span> steps.
+        </div>
+        <ol class="step-list" id="stepList"></ol>
+      </section>
+
+    </main>
+  </div>
+
+  <template id="stepTemplate">
+    <li class="step-item" data-id="">
+      <div class="step-drag-handle" title="Drag to reorder">&#8999;</div>
+      <div class="step-number"></div>
+      <div class="step-content">
+        <div class="step-image-wrap">
+          <img class="step-thumb" src="" alt="" loading="lazy">
+          <canvas class="step-overlay"></canvas>
+        </div>
+        <input class="step-label-input" type="text" placeholder="Step label" maxlength="500">
+      </div>
+      <div class="step-actions">
+        <button class="btn btn-xs" data-action="move-up" title="Move up">&#8593;</button>
+        <button class="btn btn-xs" data-action="move-down" title="Move down">&#8595;</button>
+        <button class="btn btn-xs btn-danger" data-action="delete" title="Delete step">&#10005;</button>
+      </div>
+    </li>
+  </template>
+
+  <script src="/js/api.js"></script>
+  <script src="/js/overlay.js"></script>
+  <script src="/js/recorder.js"></script>
+  <script src="/js/editor.js"></script>
+  <script src="/js/app.js"></script>
+</body>
+</html>
