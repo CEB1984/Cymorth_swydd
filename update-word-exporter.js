@@ -1,4 +1,10 @@
+#!/usr/bin/env node
 'use strict';
+
+const fs = require('fs');
+const path = require('path');
+
+const content = `'use strict';
 
 const fs2 = require('fs');
 const fs  = require('fs/promises');
@@ -201,7 +207,7 @@ async function exportWord(guide, templateName) {
   }
 
   headerParts.push(new TextRun({
-    text: '\t' + guide.title,
+    text: '\\t' + guide.title,
     font: styles.fontFamily, size: pt(9), color: hex(colors.heading),
   }));
 
@@ -236,7 +242,7 @@ async function exportWord(guide, templateName) {
   const footerPara = new Paragraph({
     children: [
       new TextRun({ text: footer.left || '', font: styles.fontFamily, size: pt(9), color: hex(colors.body) }),
-      new TextRun({ text: '\t', font: styles.fontFamily }),
+      new TextRun({ text: '\\t', font: styles.fontFamily }),
       ...footerParts,
     ],
     tabStops: [{ type: TabStopType.RIGHT, position: layout.imageMaxWidthDXA }],
@@ -291,3 +297,7 @@ async function exportWord(guide, templateName) {
 }
 
 module.exports = { exportWord };
+`;
+
+fs.writeFileSync(path.join(process.cwd(), 'server/services/exporter/word.js'), content);
+console.log('word.js written ok');
